@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b1415">
+    <meta name="description" content="An unofficial, independent wiki for community Elektron emulators, firmware mods, and reverse-engineering tools.">
+    <title>Unofficial Elektron Hacking Wiki</title>
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site-shell">
+      <aside class="sidebar" aria-label="Site navigation">
+        <button class="nav-close" id="nav-close" type="button" aria-label="Close navigation">×</button>
+        <a class="brand" href="#/" aria-label="Unofficial Elektron Hacking Wiki home">
+          <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+          <span><strong>UNOFFICIAL</strong><small>ELEKTRON HACKING WIKI</small></span>
+        </a>
+        <p class="sidebar-caption">Emulators, firmware, and tools.</p>
+        <nav class="side-nav" id="side-nav" aria-label="Browse"></nav>
+        <div class="sidebar-bottom">
+          <div class="side-note">Research snapshot · 26 Sep 2026</div>
+          <span>Source links live on each project page.</span>
+        </div>
+      </aside>
+      <div class="main-area">
+        <header class="topbar">
+          <button class="mobile-menu" id="mobile-menu" type="button" aria-label="Open navigation" aria-expanded="false">☰</button>
+          <a class="mobile-brand" href="#/"><strong>UNOFFICIAL</strong> ELEKTRON WIKI</a>
+          <span class="topbar-path" id="topbar-path">INDEX / ALL PROJECTS</span>
+          <form id="search-form" class="search-form" role="search">
+            <label class="sr-only" for="site-search">Search projects and features</label>
+            <span aria-hidden="true">⌕</span>
+            <input id="site-search" type="search" placeholder="Search projects, features…" autocomplete="off">
+            <kbd>/</kbd>
+          </form>
+        </header>
+        <main id="main" tabindex="-1"></main>
+        <footer class="site-footer"><span>Independent, unofficial, and unaffiliated with Elektron.</span><span>Research snapshot: 26 SEP 2026 · <a href="./repos.txt">Original link list</a></span></footer>
+      </div>
+    </div>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
