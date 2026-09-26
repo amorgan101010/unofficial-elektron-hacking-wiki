@@ -229,15 +229,15 @@ export const projects = [
     summary: "Monomachine DSP emulation as DAW instruments and effects, plus a SysEx library app.",
     why: "Use it for a single Monomachine track, all six tracks, the FX machines, or browsing your own SysEx dumps in a DAW workflow.",
     features: ["One and Six instruments", "FX plugin for Monomachine effects", "AU/VST3 and standalone builds", "Library for presets, kits, patterns, and audio previews"],
-    requirements: "Elektron_SFX6-60_OS1.32B.syx from Elektron's OS 1.32B ZIP; release builds for macOS 12+, Windows 10+ x64, and Linux x64.",
+    requirements: "Your own Monomachine OS 1.32B .syx file; release builds for macOS 12+, Windows 10+ x64, and Linux x64.",
     steps: [
       { title: "Install the matching release", body: "On macOS run the installer for AU/VST3 and the Library app. On Windows run the x64 installer, or copy the ZIP's .vst3 folders into C:\\Program Files\\Common Files\\VST3\\. On Linux copy the .vst3 folders into ~/.vst3/." },
-      { title: "Point it at the exact OS file", body: "Download Elektron_SFX6-60_OS1.32B.zip from Elektron and unzip it. Open a plugin or the Library app, choose Select OS File…, then select Elektron_SFX6-60_OS1.32B.syx." },
+      { title: "Select your OS file", body: "Open a plugin or the Library app, choose Select OS File…, and select your own compatible Monomachine OS 1.32B .syx." },
       { title: "Choose a format", body: "Use One for a track, Six for six tracks with separate outputs, or FX for audio processing." }
     ],
     caveat: "The author documents substitute Digibank waveforms and incomplete delay tempo behavior. MIDI transfer to hardware is not implemented; use .syx files for dumps.",
     source: "https://github.com/shnolk/monomodule", docs: "https://github.com/shnolk/monomodule/blob/main/README.md",
-    links: [{ label: "Releases", url: "https://github.com/shnolk/monomodule/releases" }, { label: "Elektron OS 1.32B ZIP", url: "https://www.elektron.se/wp-content/uploads/2024/09/Elektron_SFX6-60_OS1.32B.zip" }], related: ["gearmulator", "firmware-tool"]
+    links: [{ label: "Releases", url: "https://github.com/shnolk/monomodule/releases" }], related: ["gearmulator", "firmware-tool"]
   },
   {
     id: "ems-monomachine", name: "Em’s Monomachine firmware", author: "emuyia", devices: ["monomachine"], kind: "Firmware", stage: "No public patcher yet",
