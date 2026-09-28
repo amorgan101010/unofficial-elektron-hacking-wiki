@@ -7,7 +7,7 @@ export const devices = [
   { id: "machinedrum", name: "Machinedrum", shorthand: "MD", detail: "Emulation and companion tools" },
   { id: "monomachine", name: "Monomachine", shorthand: "MM", detail: "Emulation, mods, and companion tools" },
   { id: "analog-four", name: "Analog Four", shorthand: "A4", detail: "MCL secondary MIDI; Overbridge 2 on MKII" },
-  { id: "analog-rytm", name: "Analog Rytm", shorthand: "AR", detail: "Overbridge 2 on MKII" },
+  { id: "analog-rytm", name: "Analog Rytm", shorthand: "AR", detail: "MKI firmware mods; Overbridge 2 on MKII" },
   { id: "analog-heat", name: "Analog Heat", shorthand: "AH", detail: "Overbridge 2, MKII, and +FX" },
   { id: "syntakt", name: "Syntakt", shorthand: "ST", detail: "Overbridge 2" }
 ];
@@ -59,13 +59,13 @@ export const projects = [
     links: [{ label: "Browser patcher", url: "https://www.junes.website/goodies/octakit" }], related: ["octabam", "midisc"]
   },
   {
-    id: "octalab", name: "octalab", author: "nordseele", devices: ["octatrack"], kind: "Research", stage: "Notes only",
-    summary: "Octatrack firmware experiments around groove import, capture, generators, and workflow shortcuts.",
-    why: "Read it for implemented behavior, interface ideas, and findings about the stock firmware.",
-    features: ["Bank groove pool experiments", "Groove conversion from Ableton .agr files", "Capture and generator pages", "Octatrack firmware notes"],
-    requirements: "No public build or source code is currently provided.",
-    steps: [{ title: "Read the research", body: "Start with the README and its linked docs. Treat the described controls as experimental until a public build is available." }],
-    caveat: "The author explicitly publishes no firmware, build, flashing procedure, or source code here. The old octalab-notes URL redirects to octalab.",
+    id: "octalab", name: "octalab", author: "nordseele", devices: ["octatrack"], kind: "Research", stage: "Testing, no code release",
+    summary: "An Octatrack MKI 1.40C firmware workshop documenting tested creative helpers, active test builds, and unreleased interface ideas.",
+    why: "Follow the feature-level test status and workflow experiments without mistaking the repository for a downloadable firmware project.",
+    features: ["MKI-tested groove pool and Euclidean grid page", "CAPTURE sampling-notepad workflow", "Randomization and pattern-cleanup shortcuts", "VIEWS, TAPE, and MODIFIER work marked separately by test status"],
+    requirements: "No public firmware, build, or source code is provided. The author says the work is built and tested on an Octatrack MKI running OS 1.40C.",
+    steps: [{ title: "Read the feature status", body: "The README labels each feature as working on the unit, in test builds, or only designed. Start with State of the project before relying on a described workflow." }],
+    caveat: "The upstream repository is an active workshop, not a product release. It states that new builds reach the unit often but provides no firmware image, build instructions, flashing procedure, or release promise; MKII compatibility remains untested.",
     source: "https://github.com/nordseele/octalab", docs: "https://github.com/nordseele/octalab/blob/main/README.md", links: [], related: ["octabam"]
   },
   {
@@ -167,19 +167,19 @@ export const projects = [
     source: "https://github.com/mischa85/elektron-firmware-tool", docs: "https://github.com/mischa85/elektron-firmware-tool/blob/main/README.md", links: [], related: ["octamax", "octabam", "dnfw"]
   },
   {
-    id: "elekloader", name: "elekloader", author: "irpina", devices: ["digitakt"], kind: "Tool", stage: "Source + core release",
-    summary: "A Digitakt MKI mod loader that combines .elemod packages with your own stock OS 1.53.",
-    why: "Use it to install compatible Digitakt mods together and have conflicts checked before building an OS file.",
-    features: ["Tk GUI and Python CLI", "Checks stock hash and mod conflicts", "Core hook bus for linkable mods", "Re-verifies generated OS"],
-    requirements: "Digitakt MKI OS 1.53 .syx from Elektron; Python 3.9+ for the documented source path and the core .elemod from Releases.",
+    id: "elekloader", name: "elekloader", author: "irpina", devices: ["digitakt", "digitone", "octatrack"], kind: "Tool", stage: "Windows release + source",
+    summary: "A mod and whole-build loader for Digitakt MKI, Digitone MKI/Keys, and Octatrack stock OS files.",
+    why: "Use it to combine compatible .elemod packages, check conflicts, and create a verified OS file for the supported device profile.",
+    features: ["Tk GUI and Python CLI", "Checks stock hash and mod conflicts", "Device-specific core hook bus for linkable mods", "Re-verifies generated OS"],
+    requirements: "Your own exact supported OS: Digitakt MKI 1.53, Digitone MKI/Keys 1.43, or Octatrack 1.40C. Use the Windows 0.3 release or Python 3.9+ for the source path.",
     steps: [
-      { title: "Run the GUI from source", body: "Download core-2.0a.elemod from Releases and your own Digitakt_OS1.53.syx, then open the app:", code: "git clone https://github.com/irpina/elekloader\ncd elekloader\npython -m elekloader" },
+      { title: "Run the GUI", body: "The current 0.3 release includes elekloader-0.3.0-windows.exe and the Digitakt core. For the source path, create an environment and install the checkout:", code: "git clone https://github.com/irpina/elekloader\ncd elekloader\npython -m venv .venv\n. .venv/bin/activate\npip install -e .\nelekloader" },
       { title: "Select mods and check the build", body: "Choose the stock OS, install .elemod files, tick your mods, and click BUILD FIRMWARE. For a digislicer example, put the stock .syx and both .elemod files in this directory and verify before building:", code: "python -m elekloader.patch --stock Digitakt_OS1.53.syx --mod core-2.0a.elemod --mod digislicer-1.0.elemod --check\npython -m elekloader.patch --stock Digitakt_OS1.53.syx --mod core-2.0a.elemod --mod digislicer-1.0.elemod --out Digitakt_OS1.53-slicer.syx --version SL10" },
       { title: "Send the new OS through Transfer", body: "Connect the MKI by USB, select and connect it in Elektron Transfer, drag the generated .syx to Drop files here, then press YES on the unit. If it fails to boot, power on while holding FUNC, press TRIG 4 for OS UPGRADE, and send the stock .syx with Transfer's legacy OS mode." }
     ],
-    caveat: "Current support is Digitakt MKI OS 1.53. The README describes a bundled Windows executable, but the current latest release exposes only the core .elemod; use the source path unless a Windows zip is attached later.",
+    caveat: "Format-2 linkable mods currently cover Digitakt and Digitone MKI; Octatrack support is for whole format-1 builds. The 0.3 release asset includes the Digitakt core, so build the Digitone core from source when a mod needs it.",
     source: "https://github.com/irpina/elekloader", docs: "https://github.com/irpina/elekloader/blob/main/README.md",
-    links: [{ label: "Releases", url: "https://github.com/irpina/elekloader/releases/latest" }], related: ["digislicer", "digihealth"]
+    links: [{ label: "Releases", url: "https://github.com/irpina/elekloader/releases/latest" }, { label: "Supported devices", url: "https://github.com/irpina/elekloader/blob/main/docs/DEVICES.md" }], related: ["digislicer", "digihealth", "digi1-mods", "plock2sound"]
   },
   {
     id: "digislicer", name: "digislicer", author: "irpina", devices: ["digitakt"], kind: "Firmware", stage: "Release available",
@@ -207,7 +207,38 @@ export const projects = [
     ],
     caveat: "The README's load improvement is a measurement on the author's unit, not a guarantee for every project. Close Elektron Transfer before the Windows USB diagnostic tool.",
     source: "https://github.com/irpina/digihealth", docs: "https://github.com/irpina/digihealth/blob/main/README.md",
-    links: [{ label: "Mod release", url: "https://github.com/irpina/digihealth/releases/latest" }], related: ["elekloader", "digislicer"]
+    links: [{ label: "Mod release", url: "https://github.com/irpina/digihealth/releases/latest" }], related: ["elekloader", "digislicer", "digi1-mods"]
+  },
+  {
+    id: "digi1-mods", name: "digi1_mods", author: "gdeo607", devices: ["digitakt"], kind: "Firmware", stage: "Build from source",
+    summary: "Digitakt MKI OS 1.53 patch set with POLY tracks, waveform/spectrum/X-Y utilities, an LFO modulation matrix, and a master EQ.",
+    why: "Build a standalone POLY-and-utility firmware image, or use the project's linkable mods with elekloader.",
+    features: ["POLY machine with up to four notes and voice borrowing", "Three-dot waveform, spectrum, X-Y, tuner, and track activity views", "Eight-slot cross-track LFO modulation matrix", "Four-band master EQ on main, headphones, and USB audio"],
+    requirements: "Your own exact Digitakt MKI OS 1.53 .syx, Python 3, and a locally built elektron-firmware-tool. Back up projects, sounds, and samples first; keep a physical MIDI interface available for recovery.",
+    steps: [
+      { title: "Clone the patch set and its container tool", code: "git clone https://github.com/mischa85/elektron-firmware-tool\ngit clone https://github.com/gdeo607/digi1_mods\ncd elektron-firmware-tool && make\ncd ../digi1_mods" },
+      { title: "Build the confirmed all-views image", body: "This build puts waveform, spectrum, and X-Y views on the three-dots key and includes POLY. The builder verifies the exact OS 1.53 input and patched output.", code: "python3 tools/build.py --official /path/to/Digitakt_OS1.53.syx --tool ../elektron-firmware-tool/elektron-firmware-tool --page all" },
+      { title: "Flash one build and check it", body: "With a backup made, send the generated out/digi1_mods_v3r-all_1.5d.syx through Elektron Transfer and confirm with YES on the unit. FUNC + SRC should list POLY after SLICE; the three-dots key cycles the utility views." }
+    ],
+    caveat: "The standalone all-views build (v3r-all / 1.5d) is reported hardware-confirmed. The current elekloader combination of Digi Poly, Matrix, and EQ is emulator-checked but not yet hardware-tested. Standalone builds repurpose Song mode; the elekloader utilities retain it.",
+    source: "https://github.com/gdeo607/digi1_mods", docs: "https://github.com/gdeo607/digi1_mods/blob/main/README.md",
+    links: [{ label: "Install and revert", url: "https://github.com/gdeo607/digi1_mods/blob/main/docs/INSTALL.md" }, { label: "Feature controls", url: "https://github.com/gdeo607/digi1_mods/blob/main/docs/USAGE.md" }, { label: "Risk notes", url: "https://github.com/gdeo607/digi1_mods/blob/main/RISKS.md" }, { label: "Changelog", url: "https://github.com/gdeo607/digi1_mods/blob/main/CHANGELOG.md" }], related: ["elekloader", "digihealth", "firmware-tool", "digiemu"]
+  },
+  {
+    id: "plock2sound", name: "P-lock to sound", author: "AvroraPolnareff", devices: ["digitone"], kind: "Firmware", stage: "Build from source",
+    summary: "A Digitone MKI/Keys 1.43 elekloader mod that turns one step's parameter locks into a sound you can save.",
+    why: "Turn a p-locked step into a reusable sound without manually recreating its locked values.",
+    features: ["Bakes a held step's 79 parameter locks into the track sound", "Keeps the source pattern and track sound unchanged", "Preserves name, tags, and arpeggiator data", "Leaves ordinary trig copy and sound-locked steps stock"],
+    requirements: "Your own Digitone or Digitone Keys OS 1.43 .syx, Python 3.9+, the Digitone m68k toolchain, and elekloader from source. The repository currently has no published release asset.",
+    steps: [
+      { title: "Clone and install the loader", code: "git clone https://github.com/irpina/elekloader\ngit clone https://github.com/AvroraPolnareff/plock2sound\ncd elekloader\npip install -e .\ncd ../plock2sound" },
+      { title: "Build the mod and Digitone core", body: "Both commands use the same locally held OS 1.43 file. The outputs are placed together in plock2sound/out/.", code: "python -m elekloader.sdk.build . --stock /path/to/Digitone_and_Digitone_Keys_OS1.43.syx --out out\ncd ../elekloader\npython -m elekloader.sdk.build mods/core-dn1 --stock /path/to/Digitone_and_Digitone_Keys_OS1.43.syx --out ../plock2sound/out" },
+      { title: "Build the patched OS", code: "cd ../plock2sound\npython -m elekloader.patch --stock /path/to/Digitone_and_Digitone_Keys_OS1.43.syx --mod out/core-2.0a.elemod --mod out/plock2sound-1.0.elemod --out out/Digitone_OS1.43-plock2sound.syx --version P2S1" },
+      { title: "Make and save a sound", body: "Flash the generated .syx using the normal Elektron Transfer OS-update route. Hold one step's TRIG and its synth-track key, tap RECORD, then pick a free Sound Manager slot and press FUNC + STOP." }
+    ],
+    caveat: "The author reports a 265-case emulator hook matrix and a full device test matrix for the inline equivalent. The mod does not act on MIDI tracks, sound-locked steps, multiple held steps, or invalid track-key combinations.",
+    source: "https://github.com/AvroraPolnareff/plock2sound", docs: "https://github.com/AvroraPolnareff/plock2sound/blob/main/README.md",
+    links: [{ label: "Source and test notes", url: "https://github.com/AvroraPolnareff/plock2sound/blob/main/README.md" }, { label: "elekloader setup", url: "https://github.com/irpina/elekloader/blob/main/README.md" }], related: ["elekloader", "digiemu"]
   },
   {
     id: "dnfw", name: "dn2_firmware_explore", author: "angellinares", devices: ["digitone"], kind: "Tool", kinds: ["Tool", "Firmware"], stage: "CLI / browser patcher",
@@ -280,7 +311,21 @@ export const projects = [
     ],
     caveat: "The emulator has no audio, does not run SHARC DSP code, has an empty +Drive, and does not accept live human key/encoder input. The machine patch path is experimental, ColdFire-only, and not hardware-tested.",
     source: "https://github.com/m-dwyer/digikit", docs: "https://github.com/m-dwyer/digikit/blob/main/README.md",
-    links: [{ label: "Emulator and patched Unicorn", url: "https://github.com/m-dwyer/digikit/blob/main/docs/UNICORN.md" }, { label: "Tool index", url: "https://github.com/m-dwyer/digikit/blob/main/docs/TOOLS.md" }, { label: "DSP findings", url: "https://github.com/m-dwyer/digikit/blob/main/docs/findings/06-sharc-engine-and-startup.md" }], related: ["digiemu", "dnfw"]
+    links: [{ label: "Emulator and patched Unicorn", url: "https://github.com/m-dwyer/digikit/blob/main/docs/UNICORN.md" }, { label: "Tool index", url: "https://github.com/m-dwyer/digikit/blob/main/docs/TOOLS.md" }, { label: "DSP findings", url: "https://github.com/m-dwyer/digikit/blob/main/docs/findings/06-sharc-engine-and-startup.md" }], related: ["digiemu", "dnfw", "digitakt-ii-research"]
+  },
+  {
+    id: "digitakt-ii-research", name: "Digitakt II firmware research", author: "lalzart", devices: ["digitakt"], kind: "Research", stage: "Documentation only",
+    summary: "A bounded public architecture map of Digitakt II OS 1.15C, covering its ColdFire control side, SHARC audio side, and their known data paths.",
+    why: "Use it to understand what is evidenced in the II-series architecture and where real hardware or package-rebuild evidence is still missing.",
+    features: ["Update/boot and package-domain map", "ColdFire-to-SHARC recurring state exchange", "Project-sample resource lifecycle", "Explicit evidence vocabulary and modification gates"],
+    requirements: "No firmware, extracted images, installable patch, or hardware procedure is included. Git, Make, and Python 3 are enough to run its documentation checks.",
+    steps: [
+      { title: "Read the architecture boundary", body: "Start with the architecture overview, then use the research method to distinguish static, simulated, and physical claims." },
+      { title: "Check a local checkout", code: "git clone https://github.com/lalzart/digitakt-ii-firmware-research-public\ncd digitakt-ii-firmware-research-public\nmake check" }
+    ],
+    caveat: "This is a research publication for OS 1.15C. It reports authenticated board photographs but no electrical capture, device execution, audible experiment, accepted modified update, or recovery proof.",
+    source: "https://github.com/lalzart/digitakt-ii-firmware-research-public", docs: "https://github.com/lalzart/digitakt-ii-firmware-research-public/blob/main/docs/architecture-overview.md",
+    links: [{ label: "Architecture overview", url: "https://github.com/lalzart/digitakt-ii-firmware-research-public/blob/main/docs/architecture-overview.md" }, { label: "Research method", url: "https://github.com/lalzart/digitakt-ii-firmware-research-public/blob/main/docs/research-method.md" }], related: ["digikit"]
   },
   {
     id: "digiemu", name: "digiemu", author: "irpina", devices: ["digitakt", "digitone"], kind: "Emulator", kinds: ["Emulator", "Tool"], stage: "Windows release available",
@@ -315,6 +360,49 @@ export const projects = [
     links: [{ label: "Project documentation", url: "https://github.com/dagargo/overwitch/tree/master/docs" }], related: ["digiemu"]
   },
   {
+    id: "rytm1-mods", name: "rytm1_mods", author: "gdeo607", devices: ["analog-rytm"], kind: "Firmware", stage: "Build from source",
+    summary: "Analog Rytm MKI OS 1.73 patch set with sample low/high cut, LFO randomization, Euclidean accents, and velocity humanization.",
+    why: "Build one of two verified-source images for the MKI, or inspect the guarded porting and allocation work behind them.",
+    features: ["SMP CUT page on a second FILTER press", "LFO RND page on a second LFO press", "Euclidean accent operators", "Per-track random velocity offset"],
+    requirements: "Your own Analog Rytm MKI OS 1.73 at stock/Analog-Rytm_OS1.73.syx; Python 3.11+, git, make, C compiler, and m68k binutils. Keep a physical DIN-MIDI interface for recovery.",
+    steps: [
+      { title: "Clone and place your verified stock file", code: "git clone https://github.com/gdeo607/rytm1_mods\ncd rytm1_mods\ncp /path/to/Analog-Rytm_OS1.73.syx stock/Analog-Rytm_OS1.73.syx\nmake setup" },
+      { title: "Prove the container first", body: "This creates a stock-code repack and verifies it before adding a mod.", code: "make control" },
+      { title: "Build one mutually exclusive image", body: "SMP CUT and LFO RND share one stored sound-data word, so they cannot be combined.", code: "make verify   # SMP CUT: build/AR1_OS1.73_0000_0002_0003_0008.syx\nmake random   # LFO RND: build/AR1_OS1.73_0000_0002_0003_0004.syx" }
+    ],
+    caveat: "The repository labels the listed MKI changes built, not hardware-verified. Its USB update path may reject an elekloader-sized image; recovery is FUNC at boot, TRIG 4, then the stock 1.73 .syx through Transfer's legacy mode over DIN MIDI.",
+    source: "https://github.com/gdeo607/rytm1_mods", docs: "https://github.com/gdeo607/rytm1_mods/blob/main/README.md",
+    links: [{ label: "Controls", url: "https://github.com/gdeo607/rytm1_mods/blob/main/docs/MANUAL.md" }, { label: "Flashing and recovery", url: "https://github.com/gdeo607/rytm1_mods/blob/main/docs/FLASHING.md" }, { label: "Hazards", url: "https://github.com/gdeo607/rytm1_mods/blob/main/docs/HAZARDS.md" }], related: ["elekloader", "firmware-tool"]
+  },
+  {
+    id: "ems-machinedrum", name: "Em’s Machinedrum firmware", author: "emuyia", devices: ["machinedrum"], kind: "Firmware", stage: "Patcher in progress",
+    summary: "Machinedrum custom-firmware project for per-track timing, trig conditions, sequencer changes, and fixes.",
+    why: "Follow the current firmware feature history and patcher transition for the Machinedrum project.",
+    features: ["Per-track lengths and speeds", "Trig and track conditions", "Extended sequencer behavior", "Changelog for feature and compatibility history"],
+    requirements: "The repository currently provides a notice and changelog, without a current complete .syx, patcher, source tree, or install procedure.",
+    steps: [
+      { title: "Read the current notice", body: "The author says complete .syx files were removed while a patcher-based route is being prepared." },
+      { title: "Protect existing song data", body: "Back up projects and move SONG slots 13–32 before any future test; the author says those slots are removed and their remaining data is corrupted on boot." }
+    ],
+    caveat: "No runnable build or patcher is published at the checked source. The author warns that beta changes can be destructive and advises against using critical projects on beta firmware.",
+    source: "https://github.com/emuyia/ems-machinedrum-firmware", docs: "https://github.com/emuyia/ems-machinedrum-firmware/blob/main/README.md",
+    links: [{ label: "Changelog", url: "https://github.com/emuyia/ems-machinedrum-firmware/blob/main/CHANGELOG.md" }], related: ["mcl", "gearmulator", "octamachine"]
+  },
+  {
+    id: "octamachine", name: "octamachine", author: "repeat98", devices: ["octatrack", "machinedrum"], kind: "Research", stage: "Feasibility research",
+    summary: "A research program to port Machinedrum firmware and DSP programs to Octatrack hardware, using Gearmulator and octemu as reference environments.",
+    why: "Read or contribute when you need an evidence-led view of the Machinedrum-on-Octatrack port, rather than a claimed runnable port.",
+    features: ["Machinedrum OS 1.63 and Octatrack 1.40C provenance work", "Reference MD and target OT emulator baselines", "Port-plan work packets and compatibility matrix", "Synthetic capture-comparison checks"],
+    requirements: "Git, Make, and Python 3.10+ run the public documentation and synthetic checks. Firmware images, captures, and emulator prerequisites stay local and are not supplied.",
+    steps: [
+      { title: "Run the public checks", code: "git clone https://github.com/repeat98/octamachine.git\ncd octamachine\nmake check" },
+      { title: "Read status before choosing work", body: "The project status and compatibility matrix identify the accepted emulator baselines, current gates, and unproved port requirements." }
+    ],
+    caveat: "No Machinedrum boot in octemu or on an Octatrack, ported DSP audio, flashable candidate, or physical hardware result has been demonstrated. The repository has no installation or flashing procedure.",
+    source: "https://github.com/repeat98/octamachine", docs: "https://github.com/repeat98/octamachine/blob/main/docs/STATUS.md",
+    links: [{ label: "Project status", url: "https://github.com/repeat98/octamachine/blob/main/docs/STATUS.md" }, { label: "Compatibility matrix", url: "https://github.com/repeat98/octamachine/blob/main/docs/COMPATIBILITY_MATRIX.md" }, { label: "Port plan", url: "https://github.com/repeat98/octamachine/blob/main/docs/PORT_PLAN.md" }], related: ["octabam", "octemu", "gearmulator", "ems-machinedrum"]
+  },
+  {
     id: "mcl", name: "MegaCommand Live (MCL)", author: "jmamma", devices: ["machinedrum", "monomachine", "analog-four"], kind: "Tool", stage: "Controller firmware release",
     summary: "Machinedrum-centered sequencer firmware for separate MegaCommand and TBD controllers; Analog Four is supported as a secondary MIDI device.",
     why: "Extend a Machinedrum-centered setup with grid sequencing, track loading, performance controls, sample management, and secondary-device MIDI tracks.",
@@ -327,6 +415,6 @@ export const projects = [
     ],
     caveat: "The checked 5.02 release assets contain MCL controller firmware and a USB MCU update, but no Machinedrum X.13 image. X.13 is a separate required OS. Its future distribution path is not documented in MCL's current README or release notes; check the project's current links for updates.",
     source: "https://github.com/jmamma/MCL", docs: "https://jmamma.github.io/MCL/",
-    links: [{ label: "Current MCL releases", url: "https://github.com/jmamma/MCL/releases" }, { label: "MCL 5.02 requirements", url: "https://github.com/jmamma/MCL/releases/tag/5.02" }, { label: "MCL changelog", url: "https://github.com/jmamma/MCL/blob/master/Changelog" }], related: ["gearmulator", "ems-monomachine"]
+    links: [{ label: "Current MCL releases", url: "https://github.com/jmamma/MCL/releases" }, { label: "MCL 5.02 requirements", url: "https://github.com/jmamma/MCL/releases/tag/5.02" }, { label: "MCL changelog", url: "https://github.com/jmamma/MCL/blob/master/Changelog" }], related: ["gearmulator", "ems-monomachine", "ems-machinedrum"]
   }
 ];

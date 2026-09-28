@@ -3,7 +3,7 @@ https://github.com/mxldyn/octamax
 https://github.com/sambanks/octabam
 https://github.com/emuyia/ems-octakit
 https://www.junes.website/goodies/octakit
-https://github.com/nordseele/octalab-notes
+https://github.com/nordseele/octalab
 https://github.com/bryantysinger/octa-bt-pt
 https://github.com/bkkbrls-del/midisc
 https://github.com/angellinares/dn2_firmware_explore
@@ -22,3 +22,9 @@ https://github.com/m-dwyer/digikit
 https://github.com/dagargo/overwitch
 https://github.com/jmamma/MCL
 https://github.com/irpina/digiemu
+https://github.com/gdeo607/digi1_mods
+https://github.com/AvroraPolnareff/plock2sound
+https://github.com/lalzart/digitakt-ii-firmware-research-public
+https://github.com/gdeo607/rytm1_mods
+https://github.com/emuyia/ems-machinedrum-firmware
+https://github.com/repeat98/octamachine

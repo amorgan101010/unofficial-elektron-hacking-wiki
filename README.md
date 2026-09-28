@@ -1,6 +1,6 @@
 # Unofficial Elektron Hacking Wiki
 
-An independent, unofficial wiki for Elektron emulators, firmware mods, reverse-engineering tools, controller software, audio utilities, and research notes. The catalog covers all 22 repository links in [`repos.txt`](repos.txt); the two companion websites are linked from their projects. The supplied `octalab-notes` URL redirects to the current `octalab` repository.
+An independent, unofficial wiki for Elektron emulators, firmware mods, reverse-engineering tools, controller software, audio utilities, and research notes. The catalog covers all 28 repository links in [`repos.txt`](repos.txt); the two companion websites are linked from their projects.
 
 ## Run it
 
