@@ -29,3 +29,5 @@ https://github.com/lalzart/digitakt-ii-firmware-research-public
 https://github.com/gdeo607/rytm1_mods
 https://github.com/emuyia/ems-machinedrum-firmware
 https://github.com/repeat98/octamachine
+https://github.com/sd88me/mpc-vst-machinedrum
+https://github.com/sd88me/mpc-vst-monomodule

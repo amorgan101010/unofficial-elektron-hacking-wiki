@@ -282,7 +282,7 @@ export const projects = [
     ],
     caveat: "The author documents substitute Digibank waveforms and incomplete delay tempo behavior. MIDI transfer to hardware is not implemented; use .syx files for dumps.",
     source: "https://github.com/shnolk/monomodule", docs: "https://github.com/shnolk/monomodule/blob/main/README.md",
-    links: [{ label: "Releases", url: "https://github.com/shnolk/monomodule/releases" }], related: ["gearmulator", "firmware-tool"]
+    links: [{ label: "Releases", url: "https://github.com/shnolk/monomodule/releases" }], related: ["gearmulator", "firmware-tool", "mpc-monomodule", "mpc-machinedrum"]
   },
   {
     id: "ems-monomachine", name: "Em’s Monomachine firmware", author: "emuyia", devices: ["monomachine"], kind: "Firmware", stage: "No public patcher yet",
@@ -310,7 +310,42 @@ export const projects = [
     ],
     caveat: "This is joelanders's fork of The Usual Suspects' Gearmulator; direct support questions to this fork. The project does not provide copyrighted firmware images.",
     source: "https://github.com/joelanders/gearmulator-md-mm", docs: "https://github.com/joelanders/gearmulator-md-mm/blob/release/md-mm-alpha/README.md",
-    links: [{ label: "Releases", url: "https://github.com/joelanders/gearmulator-md-mm/releases" }], related: ["firmware-tool", "mcl"]
+    links: [{ label: "Releases", url: "https://github.com/joelanders/gearmulator-md-mm/releases" }], related: ["firmware-tool", "mcl", "mpc-machinedrum"]
+  },
+  {
+    id: "mpc-machinedrum", name: "Machinedrum Module", author: "sd88me", devices: ["machinedrum"], kind: "Emulator", stage: "Build from source",
+    summary: "The Machinedrum UW sound engine as a VST2 instrument for Akai MPC OS standalone devices. It runs on the MPC or Force, not on a Machinedrum.",
+    why: "Play all 16 Machinedrum tracks from one plugin on an Akai Force, with the MD's own DSP code, machine maths, and LCD-style touchscreen pages.",
+    features: ["16 tracks from one instance; MIDI notes 36-51 play tracks 1-16", "GND, TRX, EFM, E12, P-I, and ROM machines", "SYN, AMP/EFX, ROUTE, and per-track LFO pages with Q-Link support", "Factory kits and dropped-in kit .syx banks", "Voice budget and ROM on/off switch for the Force's CPU", "Recompiled voice DSP with a bit-exactness gate"],
+    requirements: "An Akai MPC OS standalone device with root file access (the author installs over SSH on a modded Force). Your own Machinedrum UW OS 1.63 file (Elektron_SPS1-1UW_OS1.63.syx), your own 8 MB UW flash image, and your own Monomachine OS 1.32B .syx for the skin's LCD fonts. A Linux or macOS computer with Docker, git, CMake, Ninja, a C++ compiler, and Python 3.",
+    steps: [
+      { title: "Clone the two repositories side by side", body: "The build script looks for Monomodule's font file at ../mpc-vst-monomodule by default.", code: "git clone --recursive https://github.com/sd88me/mpc-vst-machinedrum\ngit clone --recursive https://github.com/sd88me/mpc-vst-monomodule" },
+      { title: "Build the LCD fonts from your Monomachine OS", body: "Build Monomodule for MPC OS (its own catalog entry) without -d. Its skin step writes mpc-vst-monomodule/vst/build/art.json, which the Machinedrum skin reuses.", code: "cd mpc-vst-monomodule\nrelease/release.sh /path/to/your-monomachine-os-1.32B.syx\ncd .." },
+      { title: "Build mdProbe", body: "The README leaves this out, but the build script stops without it. These commands, from tools/mdtrace/README.md, put mdProbe at the path the script expects.", code: "cd mpc-vst-machinedrum/libs/gearmulator-md-mm\ngit apply ../../tools/mdtrace/gearmulator-md-mm.patch\ncp ../../tools/mdtrace/mdProbe.cpp ../../tools/mdtrace/mdTraceTool.cpp source/elektron/md/mdLibTest/\ngit submodule update --init --depth 1 source/dsp56300 source/mc68k source/cpp-terminal \\\n    source/3rdparty/freetype source/3rdparty/RmlUi\n(cd source/dsp56300 && git submodule update --init --depth 1 source/asmjit \\\n    && git apply ../../../../tools/mdtrace/dsp56300-md-mm.patch)\ncmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo \\\n    -Dgearmulator_BUILD_JUCEPLUGIN=OFF -Dgearmulator_BUILD_JUCEPLUGIN_CLAP=OFF -DBUILD_TESTING=ON\ncmake --build build --target mdProbe\ncd ../.." },
+      { title: "Build the installer", body: "The script needs both files, although the README calls the flash image optional. It stops if the recompiled DSP does not match the interpreter bit for bit. The output is dist/Machinedrum-Module-<version>-mpc-armv7.zip.", code: "release/build_release.sh /path/to/Elektron_SPS1-1UW_OS1.63.syx /path/to/md-uw-flash.bin" },
+      { title: "Install on the device", body: "Save your MPC project first: the installer stops and restarts MPC. Add -d <device-ip> to the build command to copy and install over SSH as root, or unzip the result on the device and run its install.sh as root." }
+    ],
+    caveat: "v0.1.0 is a pre-release, tested only on an Akai Force with MPC OS 3.9.1. Other MPC OS devices are expected to work but are untested. Master effects are missing, so REV and DEL do nothing. One Force core plays about 4-5 voices. RAM, INP, and MID/CTR machines are not offered. The zip contains firmware-derived code and data: keep it for your own devices and do not share it.",
+    source: "https://github.com/sd88me/mpc-vst-machinedrum", docs: "https://github.com/sd88me/mpc-vst-machinedrum/blob/main/README.md",
+    links: [{ label: "Build state (HANDOFF)", url: "https://github.com/sd88me/mpc-vst-machinedrum/blob/main/HANDOFF.md" }, { label: "mdProbe build notes", url: "https://github.com/sd88me/mpc-vst-machinedrum/blob/main/tools/mdtrace/README.md" }, { label: "Device test record", url: "https://github.com/sd88me/mpc-vst-machinedrum/blob/main/tested.json" }, { label: "mpc-vst-monomodule", url: "https://github.com/sd88me/mpc-vst-monomodule" }, { label: "mpc-vst-plugins", url: "https://github.com/sd88me/mpc-vst-plugins" }],
+    related: ["gearmulator", "monomodule", "mpc-monomodule", "ems-machinedrum"]
+  },
+  {
+    id: "mpc-monomodule", name: "Monomodule for MPC OS", author: "sd88me", devices: ["monomachine"], kind: "Emulator", stage: "Build from source",
+    summary: "A port of shnolk's Monomodule to Akai MPC OS standalone devices as VST2 instrument and effect plugins. It runs on the MPC or Force, not on a Monomachine.",
+    why: "Play the Monomachine's synth and effect machines inside MPC's own plugin host on a Force or 32-bit MPC, without a computer.",
+    features: ["Monomodule One: 15 synth machines as an instrument", "Monomodule FX: 7 effect machines as an insert effect", "Upstream knob layouts and LCD art drawn from your own OS file", "Presets from kit .syx dumps, with bank and preset steppers", "Factory kit bank extracted from your own OS file", "Static DSP recompiler, bit-exact against the x86 emulator on all 22 machines"],
+    requirements: "A first-generation, 32-bit MPC OS standalone device (Force, MPC Live/Live II, One, X, or Key 61) with root SSH access. Your own Monomachine OS 1.32B .syx. A Linux or macOS computer with Docker, git, and Python 3.",
+    steps: [
+      { title: "Clone the repository", code: "git clone --recursive https://github.com/sd88me/mpc-vst-monomodule\ncd mpc-vst-monomodule" },
+      { title: "Build the installer", body: "The script clones mpc-vst-plugins if needed, builds inside Docker, and stops if the recompiled DSP does not match the interpreter bit for bit. The output is dist/Monomodule-<version>-mpc-armv7.zip.", code: "release/release.sh /path/to/your-monomachine-os-1.32B.syx" },
+      { title: "Install on the device", body: "Save your MPC project first: installing needs one MPC restart and backs up MPC.settings. Add -d <device-ip> to the build command to copy and install over SSH as root, or copy the unzipped folder yourself.", code: "scp -r dist/Monomodule-<version>-mpc-armv7 root@<device-ip>:/tmp/\nssh root@<device-ip> sh /tmp/Monomodule-<version>-mpc-armv7/install.sh" },
+      { title: "Add presets (optional)", body: "Put Monomachine kit dumps in /sdcard/vst/monomodule/dumps/ or Force Documents/Monomachine Dumps/. To add the factory bank, extract it from your OS file and copy the result there.", code: "release/extract_factory.sh /path/to/your-monomachine-os-1.32B.syx factory.syx" }
+    ],
+    caveat: "v0.9.x is tested only on an Akai Force with MPC OS 3.9.1; the other listed devices are untested. Installing plugins this way is unofficial: back up first. In MPC's Track Q-Link mode, a 0-127 knob can jump back near 0 (Screen mode is fine). One instance uses about 46-69% of a Force core. release/uninstall.sh removes both plugins. Built zips and extracted banks contain Elektron's firmware data: do not share them.",
+    source: "https://github.com/sd88me/mpc-vst-monomodule", docs: "https://github.com/sd88me/mpc-vst-monomodule/blob/main/README.md",
+    links: [{ label: "Device test record", url: "https://github.com/sd88me/mpc-vst-monomodule/blob/main/tested.json" }, { label: "Build state (HANDOFF)", url: "https://github.com/sd88me/mpc-vst-monomodule/blob/main/HANDOFF.md" }, { label: "mpc-vst-plugins", url: "https://github.com/sd88me/mpc-vst-plugins" }],
+    related: ["monomodule", "mpc-machinedrum", "gearmulator"]
   },
   {
     id: "digikit", name: "digikit", author: "m-dwyer", devices: ["digitakt", "digitone"], kind: "Emulator", kinds: ["Emulator", "Tool", "Firmware"], stage: "Source research toolkit",
