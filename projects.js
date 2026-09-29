@@ -18,11 +18,11 @@ export const projects = [
     summary: "A modular Octatrack firmware remixer, with new DSP effects, community ports, an emulator, and a virtual panel.",
     why: "Start here when you want to combine Octatrack mods, audition new effects, or test a custom OS before flashing.",
     features: ["Compose modules into named remixes", "BusVerb, BusDelay, send bus, and insert effects", "Ports for MIDI scenes, Octakit, USB audio/MIDI, and other work", "ColdFire/DSP emulation and a browser panel", "Stress project generator and test harness"],
-    requirements: "Your own Octatrack OS 1.40C; macOS and Homebrew for the documented build path; git submodules. Its Linux/WSL2 notes (BUILDING.md §1a) flag a missing m68k-elf-gcc route and treat make setup, make image, and make check as unverified there.",
+    requirements: "Your own Octatrack OS 1.40C; macOS with the Xcode Command Line Tools and Homebrew for the documented build path; Python 3.10+, cmake, and uv; git submodules. Its Linux/WSL2 notes (BUILDING.md §1a) flag a missing m68k-elf-gcc route and treat make setup, make image, and make check as unverified there.",
     steps: [
       { title: "Clone with community modules", code: "git clone --recurse-submodules https://github.com/sambanks/octabam\ncd octabam" },
       { title: "Prepare tools and your own OS", code: "make setup\nmake os && make recon" },
-      { title: "Inspect and test a remix", body: "The panel needs the emulator setup and a project folder: set OT_PROJECT to a project directory or put its path in ~/.octabam_project.", code: "make modules\nmake check REMIX=ok-ms\nmake emu-setup && make emu-cf\nmake panel REMIX=ok-ms OT_PROJECT=/path/to/project" },
+      { title: "Inspect and test a remix", body: "Build the emulators before make check, or some gates skip. The panel also needs a project folder: set OT_PROJECT to a project directory or put its path in ~/.octabam_project.", code: "make modules\nmake emu-setup && make emu-cf\nmake check REMIX=ok-ms OT_PROJECT=/path/to/project\nmake panel REMIX=ok-ms OT_PROJECT=/path/to/project" },
       { title: "Build an image if the checks pass", code: "make image REMIX=ok-ms BUILD=1" }
     ],
     caveat: "Module compatibility is checked by the remixer. The emulator does not cover every hardware behavior; read each remix's hardware status before flashing.",
