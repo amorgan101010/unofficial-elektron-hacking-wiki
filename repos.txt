@@ -31,3 +31,4 @@ https://github.com/emuyia/ems-machinedrum-firmware
 https://github.com/repeat98/octamachine
 https://github.com/sd88me/mpc-vst-machinedrum
 https://github.com/sd88me/mpc-vst-monomodule
+https://github.com/DigiAlchemydsp/DigiSplash

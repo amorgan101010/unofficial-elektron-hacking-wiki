@@ -193,7 +193,7 @@ export const projects = [
     ],
     caveat: "Format-2 linkable mods currently cover Digitakt and Digitone MKI; Octatrack support is for whole format-1 builds. The 0.3.0 apps have no Digitone support; Digitone builds need elekloader from source, with core-dn1 built via elekloader.sdk.build mods/core-dn1.",
     source: "https://github.com/irpina/elekloader", docs: "https://github.com/irpina/elekloader/blob/main/README.md",
-    links: [{ label: "Releases", url: "https://github.com/irpina/elekloader/releases/latest" }, { label: "Supported devices", url: "https://github.com/irpina/elekloader/blob/main/docs/DEVICES.md" }], related: ["digislicer", "digihealth", "digi1-mods", "plock2sound"]
+    links: [{ label: "Releases", url: "https://github.com/irpina/elekloader/releases/latest" }, { label: "Supported devices", url: "https://github.com/irpina/elekloader/blob/main/docs/DEVICES.md" }], related: ["digislicer", "digihealth", "digi1-mods", "plock2sound", "digisplash"]
   },
   {
     id: "digislicer", name: "digislicer", author: "irpina", devices: ["digitakt"], kind: "Firmware", stage: "Release available",
@@ -208,6 +208,22 @@ export const projects = [
     caveat: "Not hardware-tested as a mod (checked 2026-09-29). The author tried the editor on a Digitakt MKI only in the earlier custom builds (1.8J) it was split from; 1.1, 1.2 and the unreleased 2.0 were checked in the author's digikit-derived emulator (the public Digitakt MKI build is digiemu; m-dwyer/digikit itself covers only the II series) and are each marked \"Not yet tried on a unit.\" The mod targets OS 1.53 specifically; use elekloader's compatibility check.",
     source: "https://github.com/irpina/digislicer", docs: "https://github.com/irpina/digislicer/blob/main/README.md",
     links: [{ label: "Mod release", url: "https://github.com/irpina/digislicer/releases/latest" }], related: ["elekloader", "digihealth"]
+  },
+  {
+    id: "digisplash", name: "DigiSplash", author: "DigiAlchemydsp", devices: ["digitakt", "digitone"], kind: "Firmware", stage: "Release available",
+    summary: "Boot-splash mods for Digitakt MKI and Digitone MKI / Keys, packaged as elekloader mods, with a generator that turns a PNG or GIF into a splash.",
+    why: "Change the startup animation, or boot the rare alternate stock animation that the stock selector never reaches, without touching anything else the unit does.",
+    features: ["rare-splash: the alternate stock boot animation", "Animated DIGITUSSY and DIGITRASH splashes", "Nine generated splashes in the 1.0 release", "make-bootanim: build your own splash mod from a PNG or GIF"],
+    requirements: "Digitakt MKI on stock OS 1.53 or Digitone MKI / Digitone Keys on stock OS 1.43, elekloader, and the matching core mod. The upstream examples use Digitakt core 2.1, which is on elekloader's main branch (the 0.3.0 release ships core 2.0a); the mods require core without naming a minimum version. Digitone needs core-dn1 2.0a, which elekloader provides only as source. Building from source or using make-bootanim needs Python 3 (Pillow for the generator) and an m68k toolchain for every mod except rare-splash.",
+    steps: [
+      { title: "Get the release for your device", body: "Download DigiSplash-1.0-digitakt-mk1.zip or DigiSplash-1.0-digitone-mk1.zip from the v1.0 release. Each holds the .elemod files and their sources." },
+      { title: "Patch with elekloader", body: "Combine your stock OS, the matching core, and one splash. Every splash except rare-splash is a draw mod hooking the same call sites, so install only one of them. rare-splash can be combined with a draw mod, but the draw mod then hides it. You can also drop the .elemod into the elekloader window (Install from file) with the matching core.", code: "python -m elekloader.patch --stock Digitakt_OS1.53.syx \\\n    --mod core-2.1.elemod --mod elemods/mount.elemod \\\n    --out mount.syx --version 2.0x" },
+      { title: "Send and recover", body: "Send the .syx with Elektron Transfer like a stock OS. Only the main OS section changes. To recover a Digitakt, hold FUNC while powering on, choose OS UPGRADE, and send the stock Digitakt_OS1.53.syx; on a Digitone, hold FUNC while powering on and press TRIG 4 (OS UPGRADE). Keep the stock file." }
+    ],
+    caveat: "Emulator-tested only (checked 2026-09-29). The project's handoff notes say \"Nothing is flashed on the physical units from this session's builds.\" digitussy and digitrash cold-boot to a live UI in digiemu on the Digitakt, and digitussy plus a generated splash do on the Digitone; aba-bootanim has not been cold-booted on the Digitakt, and the Digitone rare-splash animation has not been captured. The docs make no statement about testing the 13 prebuilt .elemod files. The source examples use the author's local folder name (../digitakt-splash-mods/) rather than DigiSplash.",
+    source: "https://github.com/DigiAlchemydsp/DigiSplash", docs: "https://github.com/DigiAlchemydsp/DigiSplash/blob/main/docs/INSTALLING.md",
+    links: [{ label: "v1.0 release", url: "https://github.com/DigiAlchemydsp/DigiSplash/releases/tag/v1.0" }, { label: "Prebuilt mods", url: "https://github.com/DigiAlchemydsp/DigiSplash/blob/main/releases/README.md" }, { label: "Splash generator", url: "https://github.com/DigiAlchemydsp/DigiSplash/blob/main/tools/make-bootanim/README.md" }],
+    related: ["elekloader", "digiemu"]
   },
   {
     id: "digihealth", name: "digihealth", author: "irpina", devices: ["digitakt"], kind: "Firmware", stage: "Release available",
