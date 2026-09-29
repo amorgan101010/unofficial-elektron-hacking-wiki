@@ -9,6 +9,7 @@ https://github.com/bkkbrls-del/midisc
 https://github.com/angellinares/dn2_firmware_explore
 https://angellinares.github.io/dn2_firmware_explore/index.html
 https://github.com/timhastie/octatrick
+https://github.com/theremoteviewer/octa-passos
 https://github.com/timhastie/octa-panel
 https://github.com/Zac-Kyoti/octatrack-kyoti-fw
 https://github.com/irpina/digislicer

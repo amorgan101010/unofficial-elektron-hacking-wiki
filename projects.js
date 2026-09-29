@@ -28,7 +28,7 @@ export const projects = [
     caveat: "Module compatibility is checked by the remixer. The emulator does not cover every hardware behavior; read each remix's hardware status before flashing.",
     source: "https://github.com/sambanks/octabam", docs: "https://github.com/sambanks/octabam/blob/main/docs/remixes/BUILDING.md",
     links: [{ label: "Remix status", url: "https://github.com/sambanks/octabam/blob/main/docs/remixes/README.md" }, { label: "Stress project", url: "https://github.com/sambanks/octabam/blob/main/tools/harness/STRESS_PROJECT.md" }],
-    related: ["octakit", "midisc", "octatrick", "octa-panel", "octemu"]
+    related: ["octakit", "midisc", "octatrick", "passos", "octa-panel", "octemu"]
   },
   {
     id: "octamax", name: "OCTAMAX", author: "mxldyn", devices: ["octatrack"], kind: "Firmware", stage: "Build from source",
@@ -109,6 +109,20 @@ export const projects = [
     ],
     caveat: "The author reports the octatrick-usb remix running on an MKI. The synth conflicts with tempo-bus in the documented placement; let the build ledger enforce combinations.",
     source: "https://github.com/timhastie/octatrick", docs: "https://github.com/timhastie/octatrick/blob/main/README.md", links: [], related: ["octabam", "octa-panel"]
+  },
+  {
+    id: "passos", name: "PassOS", author: "theremoteviewer", devices: ["octatrack"], kind: "Firmware", stage: "Build from source",
+    summary: "An octabam remix for the Octatrack MKI that adds Digitone II scales to the NOTE page and an optional STOP/PLAY confirmation.",
+    why: "Use it when you want scale-locked notes on stock OS 1.40C and the unchanged set of 14 stock FX2 effects.",
+    features: ["SCL and ROT on MIDI NOTE SETUP: 36 Digitone II scales across 12 roots", "NOTE page and emitted notes snap to the scale", "RiDylan mode: STOP and PLAY ask before stopping when this unit is clock master", "No DSP changes"],
+    requirements: "Your own Octatrack OS 1.40C, the octabam toolchain, a CompactFlash card, and a working 5-pin DIN MIDI interface for recovery.",
+    steps: [
+      { title: "Clone the PassOS branch", code: "git clone --recurse-submodules https://github.com/theremoteviewer/octa-passos\ncd octa-passos" },
+      { title: "Build the-passenger remix", body: "Run make recon after make os: the build step stops without out/raw/section_3_MAIN_OS.bin. The build writes out/OCTATRACK_PassOS1.0.bin for the card and a matching .syx for MIDI.", code: "make setup\nmake os\nmake recon\nmake image REMIX=the-passenger BUILD=1" },
+      { title: "Flash with a recovery path ready", body: "Follow docs/remixer/FLASHING.md. USB MIDI to the Octatrack cannot install OS updates, so check the DIN MIDI recovery route before flashing." }
+    ],
+    caveat: "The author reports PassOS 1.0 running on an MKI; the repository does not report an MKII test. Scale changes leave stored trig notes as written and snap only the notes that play. Built images contain Elektron's OS and must not be shared.",
+    source: "https://github.com/theremoteviewer/octa-passos", docs: "https://github.com/theremoteviewer/octa-passos/blob/passos-1.0/README.md", links: [{ label: "Flashing guide", url: "https://github.com/theremoteviewer/octa-passos/blob/passos-1.0/docs/remixer/FLASHING.md" }, { label: "Scale research notes", url: "https://github.com/theremoteviewer/octa-passos/blob/passos-1.0/modules/scales/NOTES.md" }], related: ["octabam", "octatrick", "octamax"]
   },
   {
     id: "octa-panel", name: "octa-panel", author: "timhastie", devices: ["octatrack"], kind: "Emulator", kinds: ["Emulator", "Firmware"], stage: "Build from source",
