@@ -58,7 +58,7 @@ function homePage() {
   main.innerHTML = '<header class="home-intro"><span class="eyebrow">INDEPENDENT PROJECT INDEX</span>' +
     '<h1>Unofficial Elektron<br>hacking wiki</h1>' +
     '<p class="lede">Emulators, firmware changes, tools, and research notes in one source-linked index. Entries give supported devices and OS versions, a way to start, and known limits.</p>' +
-    '<div class="home-meta"><span>' + projects.length + ' repositories</span><span>' + devices.length + ' device families</span><span>Checked 26 Sep 2026</span></div>' +
+    '<div class="home-meta"><span>' + projects.length + ' repositories</span><span>' + devices.length + ' device families</span><span>Checked 29 Sep 2026</span></div>' +
     '<div class="home-links"><a href="#/all">Browse every project <span aria-hidden="true">→</span></a><a href="#/guide/start">How to use the wiki <span aria-hidden="true">→</span></a></div></header>' +
     '<section class="section home-section"><div class="home-section-head"><h2>Browse by device</h2><p>Projects appear wherever the author documents support. Each project page explains its exact role and OS version.</p></div>' +
     '<div class="device-grid">' + devices.map((device) => {
@@ -113,7 +113,7 @@ function projectPage(project) {
     '<section class="detail-section"><h2>Related projects</h2>' + projectGrid(related) + '</section></div>' +
     '<aside class="detail-aside"><div class="aside-box"><h3>At a glance</h3><p>' + esc(project.stage) + '<br>' + esc(project.devices.map(deviceName).join(" · ")) + '<br>Maintained by ' + esc(project.author) + '</p></div>' +
     '<div class="aside-box"><h3>Primary sources</h3>' + sourceLinks.map((link) => '<a href="' + esc(link.url) + '" target="_blank" rel="noopener noreferrer">' + esc(link.label) + '</a>').join("") + '</div>' +
-    '<div class="aside-box"><h3>Reading this page</h3><p>This is a short guide based on the author’s documentation, checked 26 Sep 2026. Use the upstream instructions for current versions and device-specific recovery steps.</p></div></aside></div>';
+    '<div class="aside-box"><h3>Reading this page</h3><p>This is a short guide based on the author’s documentation, checked 26 Sep 2026 and re-audited 29 Sep 2026. Use the upstream instructions for current versions and device-specific recovery steps.</p></div></aside></div>';
   pathLabel.textContent = "PROJECTS / " + project.name.toUpperCase();
   document.title = project.name + " · " + siteTitle;
 }
@@ -147,7 +147,7 @@ function octabamPage(page) {
   main.innerHTML = '<div class="breadcrumbs"><a href="#/">Home</a><span>/</span><a href="#/device/octatrack">Octatrack</a><span>/</span>' +
     (page.id === "overview" ? '<span>Octabam</span>' : '<a href="#/project/octabam">Octabam</a><span>/</span><span>' + esc(page.title) + '</span>') + '</div>' +
     '<header class="project-head"><span class="eyebrow">OCTABAM / ' + esc(page.kicker.toUpperCase()) + '</span><h1>' + esc(page.title) + '</h1><p class="lede">' + esc(page.summary) + '</p>' +
-    '<div class="project-meta"><span>Firmware</span><span>Emulator</span><span>Octatrack MKI / MKII</span><span>Research snapshot: 26 Sep 2026</span></div>' +
+    '<div class="project-meta"><span>Firmware</span><span>Emulator</span><span>Octatrack MKI / MKII</span><span>Checked against upstream 666b615, 29 Sep 2026</span></div>' +
     '<div class="action-row"><a class="button primary" href="' + esc(project.source) + '" target="_blank" rel="noopener noreferrer">Open repository ↗</a>' +
     (page.id === "overview" ? '<a class="button" href="#/project/octabam/build">Build & flash →</a>' : '<a class="button" href="#/project/octabam">Project overview →</a>') + '</div></header>' +
     '<nav class="octabam-mobile-nav" aria-label="Octabam guide pages">' + octabamPages.map((item) => '<a href="' + octabamUrl(item) + '"' + (item.id === page.id ? ' class="current" aria-current="page"' : '') + '>' + esc(item.title) + '</a>').join("") + '</nav>' +
@@ -158,7 +158,7 @@ function octabamPage(page) {
     (page.id === "overview" ? '<section class="detail-section"><h2>Related projects</h2>' + projectGrid(project.related.map((id) => projectById.get(id)).filter(Boolean)) + '</section>' : '') +
     '</div><aside class="detail-aside"><div class="aside-box octabam-toc"><h3>Octabam guide</h3>' + octabamPages.map((item) => '<a href="' + octabamUrl(item) + '"' + (item.id === page.id ? ' class="current" aria-current="page"' : '') + '>' + esc(item.title) + '</a>').join("") + '</div>' +
     '<div class="aside-box"><h3>Upstream sources for this page</h3>' + sourceLinks + '</div>' +
-    '<div class="aside-box"><h3>Reading this guide</h3><p>Checked 26 Sep 2026. Confirm commands and hardware status in the linked repository before using a new build.</p></div></aside></div>';
+    '<div class="aside-box"><h3>Reading this guide</h3><p>Checked against sambanks/octabam 666b615 on 29 Sep 2026. Confirm commands and hardware status in the linked repository before using a new build.</p></div></aside></div>';
   pathLabel.textContent = "OCTABAM / " + page.title.toUpperCase();
   document.title = (page.id === "overview" ? "Octabam" : page.title + " · Octabam") + " · " + siteTitle;
 }
@@ -189,7 +189,7 @@ function extraGuidePage(project, pages, page) {
     (page.id === "overview" ? '<section class="detail-section"><h2>Related projects</h2>' + projectGrid(project.related.map((id) => projectById.get(id)).filter(Boolean)) + '</section>' : '') +
     '</div><aside class="detail-aside"><div class="aside-box octabam-toc"><h3>' + esc(project.name) + ' guide</h3>' + pages.map((item) => '<a href="' + guideUrl(item) + '"' + (item.id === page.id ? ' class="current" aria-current="page"' : '') + '>' + esc(item.title) + '</a>').join("") + '</div>' +
     '<div class="aside-box"><h3>Upstream sources for this page</h3>' + sourceLinks + '</div>' +
-    '<div class="aside-box"><h3>Reading this guide</h3><p>Checked 26 Sep 2026. Confirm current release files and support in the linked repository.</p></div></aside></div>';
+    '<div class="aside-box"><h3>Reading this guide</h3><p>Checked 26 Sep 2026; re-audited 29 Sep 2026. Confirm current release files and support in the linked repository.</p></div></aside></div>';
   pathLabel.textContent = project.name.toUpperCase() + " / " + page.title.toUpperCase();
   document.title = (page.id === "overview" ? project.name : page.title + " · " + project.name) + " · " + siteTitle;
 }
