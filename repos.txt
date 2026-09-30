@@ -32,3 +32,5 @@ https://github.com/repeat98/octamachine
 https://github.com/sd88me/mpc-vst-machinedrum
 https://github.com/sd88me/mpc-vst-monomodule
 https://github.com/DigiAlchemydsp/DigiSplash
+https://github.com/TinyGregAudio/Model-TG
+https://github.com/drumkilla/elektron-model-tweaks

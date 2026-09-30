@@ -58,7 +58,7 @@ function homePage() {
   main.innerHTML = '<header class="home-intro"><span class="eyebrow">INDEPENDENT PROJECT INDEX</span>' +
     '<h1>Unofficial Elektron<br>hacking wiki</h1>' +
     '<p class="lede">Emulators, firmware changes, tools, and research notes in one source-linked index. Entries give supported devices and OS versions, a way to start, and known limits.</p>' +
-    '<div class="home-meta"><span>' + projects.length + ' repositories</span><span>' + devices.length + ' device families</span><span>Checked 29 Sep 2026</span></div>' +
+    '<div class="home-meta"><span>' + projects.length + ' repositories</span><span>' + devices.length + ' device families</span><span>Checked 30 Sep 2026</span></div>' +
     '<div class="home-links"><a href="#/all">Browse every project <span aria-hidden="true">→</span></a><a href="#/guide/start">How to use the wiki <span aria-hidden="true">→</span></a></div></header>' +
     '<section class="section home-section"><div class="home-section-head"><h2>Browse by device</h2><p>Projects appear wherever the author documents support. Each project page explains its exact role and OS version.</p></div>' +
     '<div class="device-grid">' + devices.map((device) => {

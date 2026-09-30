@@ -1,6 +1,6 @@
 # Unofficial Elektron Hacking Wiki
 
-An independent, unofficial wiki for Elektron emulators, firmware mods, reverse-engineering tools, controller software, audio utilities, and research notes. The catalog covers all 32 repository links in [`repos.txt`](repos.txt); the two companion websites are linked from their projects.
+An independent, unofficial wiki for Elektron emulators, firmware mods, reverse-engineering tools, controller software, audio utilities, and research notes. The catalog covers all 34 repository links in [`repos.txt`](repos.txt); the two companion websites are linked from their projects.
 
 ## Run it
 
@@ -24,6 +24,6 @@ Open `http://localhost:8000`. A local server is needed because the project data 
 
 Edit [`projects.js`](projects.js) to update entries, [`octabam.js`](octabam.js) and [`guides.js`](guides.js) for detailed project guides, [`app.js`](app.js) for page behavior, and [`styles.css`](styles.css) for appearance. When adding a repository to `repos.txt`, add one project object with a stable `id`, device and kind, a concise summary, requirements, steps, an evidence-based caveat, and direct upstream links. Use `kinds` when a project belongs in multiple categories. Link companion websites through the project's `links` array rather than creating a duplicate entry.
 
-Treat the upstream README and release notes as the source of truth. Hardware testing and mod compatibility vary by feature and OS version, so update those claims only when the project author documents them. The catalog was researched on **26 September 2026**; the site does not fetch live status.
+Treat the upstream README and release notes as the source of truth. Hardware testing and mod compatibility vary by feature and OS version, so update those claims only when the project author documents them. The main catalog was researched on **26 September 2026**, with the Model:Cycles and Model:Samples additions checked on **30 September 2026**; the site does not fetch live status.
 
 This wiki hosts no Elektron firmware. Users supply stock OS files themselves where a project requires them. Check a project's current instructions and recovery documentation before building or loading modified firmware.

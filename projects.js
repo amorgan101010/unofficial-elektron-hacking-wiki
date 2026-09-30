@@ -9,7 +9,9 @@ export const devices = [
   { id: "analog-four", name: "Analog Four", shorthand: "A4", detail: "MCL secondary MIDI; Overbridge 2 on MKII" },
   { id: "analog-rytm", name: "Analog Rytm", shorthand: "AR", detail: "MKI firmware mods; Overbridge 2 on MKII" },
   { id: "analog-heat", name: "Analog Heat", shorthand: "AH", detail: "Overbridge 2, MKII, and +FX" },
-  { id: "syntakt", name: "Syntakt", shorthand: "ST", detail: "Overbridge 2" }
+  { id: "syntakt", name: "Syntakt", shorthand: "ST", detail: "Overbridge 2" },
+  { id: "model-cycles", name: "Model:Cycles", shorthand: "MC", detail: "Firmware additions and tweaks · check OS versions" },
+  { id: "model-samples", name: "Model:Samples", shorthand: "MS", detail: "Firmware tweaks · check OS versions" }
 ];
 
 export const projects = [
@@ -482,5 +484,35 @@ export const projects = [
     caveat: "The checked 5.02 release assets contain MCL controller firmware and a USB MCU update, but no Machinedrum X.13 image. X.13 is a separate required OS. MCL's README, manual, and release notes do not say where to obtain it.",
     source: "https://github.com/jmamma/MCL", docs: "https://jmamma.github.io/MCL/",
     links: [{ label: "Current MCL releases", url: "https://github.com/jmamma/MCL/releases" }, { label: "MCL 5.02 requirements", url: "https://github.com/jmamma/MCL/releases/tag/5.02" }, { label: "MCL changelog", url: "https://github.com/jmamma/MCL/blob/master/Changelog" }], related: ["gearmulator", "ems-monomachine", "ems-machinedrum"]
+  },
+  {
+    id: "model-tg", name: "Model-TG", author: "TinyGregAudio", devices: ["model-cycles"], kind: "Firmware", stage: "Build from your stock OS",
+    summary: "Adds a Sampler machine, resampling, beat-repeat, master effects, and other features to Model:Cycles OS 1.13.",
+    why: "Explore a substantial Model:Cycles firmware extension with sample playback, sampling, and performance effects.",
+    features: ["Seventh machine with seven sample playback modes", "Track, master, and USB audio resampling", "Retrig page with beat-repeat and 12 master effects", "Additional controls on stock machines", "Scale Lock and sample transfer"],
+    requirements: "Model:Cycles OS 1.13 and your own stock OS file; Python 3 and the tools listed in docs/BUILD.md. The project builds locally and does not distribute firmware images.",
+    steps: [
+      { title: "Clone the project", code: "git clone https://github.com/TinyGregAudio/Model-TG\ncd Model-TG" },
+      { title: "Build from your own OS 1.13 file", code: "python3 build.py --stock /path/to/model-cycles_OS1.13.syx" },
+      { title: "Read the user guide and recovery notes", body: "Follow the button-by-button guide and the project's instructions for installing the locally built OS and returning to stock." }
+    ],
+    caveat: "Unofficial firmware can affect the device. Back up first and follow the project's build and recovery documentation; no prebuilt firmware is provided. The README identifies OS 1.13 as its target.",
+    source: "https://github.com/TinyGregAudio/Model-TG", docs: "https://github.com/TinyGregAudio/Model-TG/blob/main/README.md",
+    links: [{ label: "Build instructions", url: "https://github.com/TinyGregAudio/Model-TG/blob/main/docs/BUILD.md" }, { label: "User guide", url: "https://github.com/TinyGregAudio/Model-TG/blob/main/docs/USER_GUIDE.md" }, { label: "Firmware tweaks used by Model-TG", url: "https://github.com/drumkilla/elektron-model-tweaks" }], related: ["model-tweaks"]
+  },
+  {
+    id: "model-tweaks", name: "Elektron Model Tweaks", author: "drumkilla", devices: ["model-cycles", "model-samples"], kind: "Firmware", kinds: ["Firmware", "Tool"], stage: "Build from your stock OS",
+    summary: "A Python patcher for three selectable Model:Cycles and Model:Samples firmware tweaks: latching mute, trig preview, and browser name scrolling.",
+    why: "Apply one or more small interface and workflow tweaks to a locally supplied Model:Cycles or Model:Samples OS.",
+    features: ["Latching track mute", "Trig preview while the sequencer is stopped", "Scrolling long names in sound, sample, and folder browsers", "Checks original firmware identity and rebuilt checksums"],
+    requirements: "Python 3 and your own supported OS 1.13 .syx file for Model:Cycles or Model:Samples. The repository provides shell and batch launchers.",
+    steps: [
+      { title: "Get the repository and your own OS file", code: "git clone https://github.com/drumkilla/elektron-model-tweaks\ncd elektron-model-tweaks" },
+      { title: "Choose and build tweaks", body: "Put the stock .syx in the project folder, then run the platform launcher and choose tweaks. Or use the command line:", code: "./apply.sh\n# Windows: apply.bat\npython3 tweak.py -i model-cycles_OS1.13.syx -t trig-preview,browser-scroll" },
+      { title: "Verify and install", body: "The output is written next to the input. Review the recovery notes and back up projects before transferring it to the device." }
+    ],
+    caveat: "The README reports testing on real Model:Cycles and Model:Samples hardware, but warns that modified firmware may void the warranty or brick a device. It documents STARTUP MENU recovery and requires backups; only supported OS 1.13 inputs are accepted.",
+    source: "https://github.com/drumkilla/elektron-model-tweaks", docs: "https://github.com/drumkilla/elektron-model-tweaks/blob/main/README.md",
+    links: [], related: ["model-tg"]
   }
 ];
