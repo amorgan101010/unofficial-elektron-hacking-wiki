@@ -195,7 +195,7 @@ export const projects = [
     ],
     caveat: "Format-2 linkable mods currently cover Digitakt and Digitone MKI; Octatrack support is for whole format-1 builds. The 0.3.0 apps have no Digitone support; Digitone builds need elekloader from source, with core-dn1 built via elekloader.sdk.build mods/core-dn1.",
     source: "https://github.com/irpina/elekloader", docs: "https://github.com/irpina/elekloader/blob/main/README.md",
-    links: [{ label: "Releases", url: "https://github.com/irpina/elekloader/releases/latest" }, { label: "Supported devices", url: "https://github.com/irpina/elekloader/blob/main/docs/DEVICES.md" }], related: ["digislicer", "digihealth", "digi1-mods", "plock2sound", "digisplash"]
+    links: [{ label: "Releases", url: "https://github.com/irpina/elekloader/releases/latest" }, { label: "Supported devices", url: "https://github.com/irpina/elekloader/blob/main/docs/DEVICES.md" }], related: ["digislicer", "digihealth", "digisophie", "digi1-mods", "plock2sound", "digisplash", "digicandy"]
   },
   {
     id: "digislicer", name: "digislicer", author: "irpina", devices: ["digitakt"], kind: "Firmware", stage: "Release available",
@@ -229,6 +229,21 @@ export const projects = [
     related: ["elekloader", "digiemu"]
   },
   {
+    id: "digicandy", name: "DigiCandy", author: "DigiAlchemydsp", devices: ["digitakt", "digitone"], kind: "Firmware", stage: "Release available",
+    summary: "A full-panel image overlay for Digitakt MKI OS 1.53 and Digitone MKI / Keys OS 1.43, toggled from the device buttons while the machine keeps running.",
+    why: "Put custom or animated images on the screen during a performance, then toggle back to the normal panel without stopping playback.",
+    features: ["Digitakt: TRK + YES; Digitone: MIDI + YES", "Single-image and animated overlays, up to 60 frames", "Image generation from PNG, GIF, or PNG-frame folders", "Ready-built overlays in separate device downloads"],
+    requirements: "Your own Digitakt MKI OS 1.53 or Digitone MKI / Keys OS 1.43, an elekloader source checkout, and the DigiCandy overlays. DigiCandy 1.0 uses core 2.1 for Digitakt and core-dn1 2.0a for Digitone; building these cores needs the matching m68k cross-toolchain (the elekloader 0.3.0 app ships Digitakt core 2.0a). Building custom overlays also needs Python 3, Pillow, and the m68k toolchain. Elektron Transfer or another SysEx sender is needed to install.",
+    steps: [
+      { title: "Get DigiCandy and elekloader", body: "The DigiCandy 1.0 device downloads each have 12 ready-built .elemod overlays; the tools download is for making your own. The commands below use the repository checkout, where the overlays are under releases/.", code: "git clone https://github.com/irpina/elekloader\ngit clone https://github.com/DigiAlchemydsp/DigiCandy" },
+      { title: "Build the matching core and patch your own OS", body: "From an elekloader source checkout with DigiCandy cloned alongside it, build the device's core and combine it with one DigiCandy overlay. Do not combine multiple DigiCandy overlays; the overlay hooks the panel-present path globally.", code: "cd elekloader\n\n# Digitakt MKI\npython -m elekloader.sdk.build mods/core --stock Digitakt_OS1.53.syx\npython -m elekloader.patch --stock Digitakt_OS1.53.syx \\\n    --mod mods/core/out/core-2.1.elemod \\\n    --mod ../DigiCandy/releases/planet1-dt.elemod --out digicandy.syx --version 2.0z\n\n# Digitone MKI / Keys\npython -m elekloader.sdk.build mods/core-dn1 --stock Digitone_and_Digitone_Keys_OS1.43.syx\npython -m elekloader.patch --stock Digitone_and_Digitone_Keys_OS1.43.syx \\\n    --mod mods/core-dn1/out/core-dn1-2.0a.elemod \\\n    --mod ../DigiCandy/releases/planet1-dn.elemod --out digicandy-dn.syx --version 2.0s" },
+      { title: "Install and toggle the overlay", body: "Enter the startup menu by holding FUNC while powering on, choose OS UPGRADE, and send the patched .syx with Elektron Transfer. TRK + YES toggles it on Digitakt; MIDI + YES toggles it on Digitone. To recover, send your own stock OS through OS UPGRADE." }
+    ],
+    caveat: "The author marks DigiCandy work in progress and says it has been tested on real hardware. A lone YES can re-open the overlay after exit; tap TRK or MIDI twice to clear the latch first. Install only one DigiCandy overlay at a time and treat it as incompatible with other mods that hook panel_diff / panel_flush until tested. The art overlays are for personal, educational, and non-commercial use; no Elektron firmware is included.",
+    source: "https://github.com/DigiAlchemydsp/DigiCandy", docs: "https://github.com/DigiAlchemydsp/DigiCandy/blob/main/README.md",
+    links: [{ label: "DigiCandy 1.0 release", url: "https://github.com/DigiAlchemydsp/DigiCandy/releases/tag/v1.0" }, { label: "Install and recovery", url: "https://github.com/DigiAlchemydsp/DigiCandy/blob/main/docs/INSTALLING.md" }, { label: "Build your own overlays", url: "https://github.com/DigiAlchemydsp/DigiCandy/blob/main/docs/BUILDING.md" }, { label: "Technical notes", url: "https://github.com/DigiAlchemydsp/DigiCandy/blob/main/docs/TECHNICAL.md" }], related: ["elekloader", "digisplash"]
+  },
+  {
     id: "digihealth", name: "digihealth", author: "irpina", devices: ["digitakt"], kind: "Firmware", stage: "Release available",
     summary: "Digitakt MKI performance and diagnostics mod with FAST AUDIO and SYSTEM INFO.",
     why: "Inspect load and memory use, and enable an audio-render optimization the author measured in the builds this mod came from.",
@@ -240,7 +255,22 @@ export const projects = [
     ],
     caveat: "The README's 537→480 µs render and 80.5→72.0% DSP-load figures were measured on a Digitakt MKI running the earlier custom builds this mod was split from; the 1.0 mod itself was checked in the author's emulator, not on a unit. Unreleased 1.1 on main adds SYSTEM INFO for Digitone MKI/Keys 1.43, emulator-checked only (checked 2026-09-29).",
     source: "https://github.com/irpina/digihealth", docs: "https://github.com/irpina/digihealth/blob/main/README.md",
-    links: [{ label: "Mod release", url: "https://github.com/irpina/digihealth/releases/latest" }], related: ["elekloader", "digislicer", "digi1-mods"]
+    links: [{ label: "Mod release", url: "https://github.com/irpina/digihealth/releases/latest" }], related: ["elekloader", "digislicer", "digisophie", "digi1-mods"]
+  },
+  {
+    id: "digisophie", name: "DigiSophie", author: "soejrd", devices: ["digitakt"], kind: "Firmware", stage: "Prebuilt mod available",
+    summary: "A fixed-point adaptation of Sophie, the metallic percussion synth, as a four-model Digitakt MKI sound machine for OS 1.53.",
+    why: "Play four metallic percussion models—FUSE, BOOM, PIPE, and SHARD—using the Digitakt's normal AMP, filter, mixer, and effects path.",
+    features: ["Four models: FUSE, BOOM, PIPE, and SHARD", "One track per voice with parameter-lockable controls", "Uses the normal Digitakt envelope, filter, mixer, and effects", "Optional FAST AUDIO diagnostic mod"],
+    requirements: "Original Digitakt MKI with OS 1.53, your own stock OS file, elekloader with core 2.1, and the prebuilt digisophie-0.1.7.elemod. The author says no compiler, Python, or source checkout is needed to install. Back up projects and sounds and keep the stock OS for recovery.",
+    steps: [
+      { title: "Get the prebuilt mod", body: "Download or clone DigiSophie and use release/digisophie-0.1.7.elemod. Install elekloader and select your own Digitakt MKI OS 1.53 with Change stock firmware." },
+      { title: "Install Sophie in elekloader", body: "Choose Install from file, select the .elemod, and enable SOPHIE. The project expects elekloader's core 2.1 to enable with it; if elekloader reports an old core or dependency error, update elekloader before building. Optionally add release/digihealth-1.0.1.elemod and enable it for SYSTEM INFO and FAST AUDIO." },
+      { title: "Build and upload", body: "Wait for Ready to build, set the four-character OS version to S027 for the documented hardware-test configuration, then build the .syx. Send it to the Digitakt with Elektron Transfer and do not power off during the update. For recovery, enter OS UPGRADE from the startup menu and send your stock OS." }
+    ],
+    caveat: "The author reports one instance runs without FAST AUDIO and that two instances were practical with FAST AUDIO in the original hardware test; eight-track operation is not claimed. FAST AUDIO is off by default in the documented S027 build. This modifies firmware: back up first, use only original Digitakt MKI OS 1.53, and keep the stock file for recovery. The repo provides source and .elemod mods, not Elektron's firmware or samples.",
+    source: "https://github.com/soejrd/digisophie", docs: "https://github.com/soejrd/digisophie/blob/main/README.md",
+    links: [{ label: "Prebuilt DigiSophie mod", url: "https://github.com/soejrd/digisophie/blob/main/release/digisophie-0.1.7.elemod" }, { label: "Hardware diagnostic notes", url: "https://github.com/soejrd/digisophie/tree/main/diagnostics" }, { label: "Sophie source project", url: "https://github.com/mestela/schwung-sophie" }, { label: "elekloader", url: "https://github.com/irpina/elekloader" }], related: ["elekloader", "digihealth", "digiemu"]
   },
   {
     id: "digi1-mods", name: "digi1_mods", author: "gdeo607", devices: ["digitakt"], kind: "Firmware", stage: "Build from source",
